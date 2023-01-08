@@ -9,6 +9,9 @@ const launch = {
     success: true,
 }
 
+function existsLaunchWithId(launchId) {
+    return launches.has(launchId)
+}
 const launches = new Map()
 let latestFlightNumber = 100
 launches.set(launch.flightNumber, launch)
@@ -25,7 +28,16 @@ function addNewLaunch(launch) {
         flightNumber: latestFlightNumber
     }))
 }
+
+function abortLaunchById(launchId) {
+    const aborted = launches.get(launchId)
+    aborted.upcoming = false
+    aborted.success = false
+    return aborted;
+}
 module.exports = {
     getAllLaunches,
     addNewLaunch,
+    existsLaunchWithId,
+    abortLaunchById
 }
